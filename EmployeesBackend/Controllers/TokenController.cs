@@ -40,14 +40,14 @@ namespace EmployeesBackend.Controllers
 
                     var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
                     var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-                    var token = new JwtSecurityToken(
+                    var generated_token = new JwtSecurityToken(
                         _configuration["Jwt:Issuer"],
                         _configuration["Jwt:Audience"],
                         claims,
                         expires: DateTime.UtcNow.AddMinutes(10),
                         signingCredentials: signIn);
 
-                    return Ok(new { generated_token = new JwtSecurityTokenHandler().WriteToken(token), user });
+                    return Ok(new { id = user.Id, username = user.Username, token = new JwtSecurityTokenHandler().WriteToken(generated_token) });
                 }
                 else
                 {
