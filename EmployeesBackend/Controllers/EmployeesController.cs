@@ -5,7 +5,7 @@ using EmployeesBackend;
 
 namespace EmployeesApplication.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class EmployeesController : ControllerBase
@@ -25,7 +25,7 @@ namespace EmployeesApplication.Controllers
           {
               return NotFound();
           }
-            return await _context.Employees.ToListAsync();
+            return await _context.Employees.FromSqlRaw($"GetEmployees").ToListAsync();
         }
 
         // GET: api/Employees/5
